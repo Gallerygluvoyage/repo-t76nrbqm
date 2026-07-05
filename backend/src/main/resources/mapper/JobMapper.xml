@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.campus.jobs.mapper.JobMapper">
+
+    <resultMap id="jobMap" type="com.campus.jobs.entity.Job">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="category" column="category"/>
+        <result property="company" column="company"/>
+        <result property="location" column="location"/>
+        <result property="salary" column="salary"/>
+        <result property="salaryUnit" column="salary_unit"/>
+        <result property="headcount" column="headcount"/>
+        <result property="contact" column="contact"/>
+        <result property="description" column="description"/>
+        <result property="status" column="status"/>
+        <result property="publisherId" column="publisher_id"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <sql id="filter">
+        <where>
+            <if test="keyword != null and keyword != ''">
+                and (title like concat('%', #{keyword}, '%')
+                     or company like concat('%', #{keyword}, '%')
+                     or location like concat('%', #{keyword}, '%'))
+            </if>
+            <if test="category != null and category != ''">
+                and category = #{category}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectList" resultMap="jobMap">
+        select * from job
+        <include refid="filter"/>
+        order by id desc
+        limit #{offset}, #{limit}
+    </select>
+
+    <select id="count" resultType="long">
+        select count(*) from job
+        <include refid="filter"/>
+    </select>
+
+    <select id="selectById" resultMap="jobMap">
+        select * from job where id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="com.campus.jobs.entity.Job" useGeneratedKeys="true" keyProperty="id">
+        insert into job (title, category, company, location, salary, salary_unit,
+                         headcount, contact, description, status, publisher_id, create_time)
+        values (#{title}, #{category}, #{company}, #{location}, #{salary}, #{salaryUnit},
+                #{headcount}, #{contact}, #{description}, #{status}, #{publisherId}, now())
+    </insert>
+
+    <update id="update" parameterType="com.campus.jobs.entity.Job">
+        update job
+        <set>
+            <if test="title != null">title = #{title},</if>
+            <if test="category != null">category = #{category},</if>
+            <if test="company != null">company = #{company},</if>
+            <if test="location != null">location = #{location},</if>
+            <if test="salary != null">salary = #{salary},</if>
+            <if test="salaryUnit != null">salary_unit = #{salaryUnit},</if>
+            <if test="headcount != null">headcount = #{headcount},</if>
+            <if test="contact != null">contact = #{contact},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        delete from job where id = #{id}
+    </delete>
+
+</mapper>
