@@ -105,3 +105,21 @@ npm run dev
 | GET/POST/PUT/DELETE | `/api/users` `/api/users/{id}` | 用户 CRUD + 搜索 |
 
 统一返回结构：`{ "code": 200, "msg": "操作成功", "data": ... }`。
+
+## 七、功能截图
+
+| 登录页 | 首页概览 |
+| --- | --- |
+| ![登录页](docs/screenshots/01-登录页.png) | ![首页概览](docs/screenshots/02-首页概览.png) |
+
+| 兼职信息管理 | 新增兼职表单 |
+| --- | --- |
+| ![兼职信息管理](docs/screenshots/03-兼职信息管理.png) | ![新增兼职表单](docs/screenshots/04-新增兼职表单.png) |
+
+| 兼职搜索 | 接单订单管理 |
+| --- | --- |
+| ![兼职搜索](docs/screenshots/06-兼职搜索.png) | ![接单订单管理](docs/screenshots/07-接单订单管理.png) |
+
+| 用户管理（仅管理员） |
+| --- |
+| ![用户管理](docs/screenshots/08-用户管理.png) |
